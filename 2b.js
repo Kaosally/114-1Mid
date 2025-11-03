@@ -43,9 +43,26 @@ http.createServer((req, res) => {
   let fileOtherFile = '';
 
   // Switch根據不同路由要寫的部分
+//使用switch判斷不同的路徑，並設定對應的文件路徑
+switch (req.url) {
+  case '/':
+    //當使用者請求首頁時,回傳index.ejs文件
+    filePath = '/index.ejs';
+    break;
+  case '/calculator':
+    //當使用者請求/calculator時,回傳index2.ejs文件
+    filePath = '/index2.ejs';
+    break;
+  default:
+    //其他未定義路徑則回傳index3.ejs文件(404頁面)
+    filePath = '/index3.ejs';
+    break;
+}
 
-
-
+//處理靜態資源請求的部分
+if(req.url.endsWith('.css') || req.url.endsWith('.js') || req.url.endsWith('.png') || req.url.endsWith('.jpg') || req.url.endsWith('.gif') || req.url.endsWith('.svg') || req.url.endsWith('.ico')){
+  fileOtherFile = req.url;
+}
 
 
   
@@ -246,3 +263,11 @@ http.createServer((req, res) => {
 // 7. 瀏覽器接收到內容並顯示給使用者
 //
 // ==========================================
+
+const error404 = '/index3.ejs';
+
+// 讀取404頁面文件
+fs.readFile('error404', 'utf8', (err, date) => {
+  res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' }); //設定回應頭，狀態碼為404，內容類型為HTML，編碼為utf-8
+  res.end(date); //將讀取到的404頁面內容發送給客戶端
+})

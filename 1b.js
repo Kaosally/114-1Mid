@@ -20,9 +20,25 @@
  *   輸入: [{ name: "mouse", stock: 5 }, { name: "keyboard", stock: 25 }]
  *   輸出: ["mouse"]
  */
+
+[
+  { name: "keyboard", stock: 25 },
+  { name: "mouse", stock: 5 },
+  { name: "monitor", stock: 8 },
+  { name: "usb cable", stock: 40 }
+];
+
 function getLowStock(products) {
- 
+  const lowStockNames = []; //宣告一個空陣列用來存放庫存量少於10的商品名稱
+  for(let i = 0; i< products.length; i++){ //使用for迴圈依序檢查每個產品的庫存量, 從i = 0開始一直到超過陣列長度為止
+    if(products[i].stock < 10){
+      lowStockNames.push(products[i].name);
+    }
+  }
+  console.log("庫存少於10的項目:" , lowStockNames)
+  return lowStockNames; // 回傳lowStockNames陣列給外部函式
 }
+
 
 
 // ==========================================
@@ -42,9 +58,26 @@ function getLowStock(products) {
  *   updates = { mouse: 15 }
  *   結果: [{ name: "mouse", stock: 15 }]
  */
+
+
 function updateStock(products, updates) {
-  
+  const newProducts = []; // 用來存放更新過後的商品名稱
+  for(let i = 0; i < products.length; i++){
+    let item = products[i];
+    
+    newProducts.push({
+      name: products[i].name,
+      stock: updates[item.name] ?? item.stock //如果updates中有這個商品的新庫存則用新的,若沒有則庫存量不變
+    });
+  }
+  //印出每個產品的庫存量(若有更新則印出更新後的庫存量)
+  for(let i = 0; i < newProducts.length; i++){
+    console.log(`${newProducts[i].name}: ${newProducts[i].stock}`);
+    
+  return newProducts; //回傳newProducts陣列給外部函式
+  }
 }
+
 
 
 // ==========================================
